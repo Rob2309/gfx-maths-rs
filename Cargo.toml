@@ -1,7 +1,18 @@
 [package]
-name = "gfx-maths-rs"
+name = "gfx-maths"
 version = "0.1.0"
+authors = [ "Robin Quint" ]
 edition = "2018"
+description = "Implementations for the most essential Graphics Math operations"
+repository = "https://github.com/rob2309/gfx-maths-rs"
+license = "MIT"
+keywords = [
+    "graphics", "vector", "matrix", "quaternion", "vulkan", "opengl", "maths", "directx",
+    "vec2", "vec3", "vec4", "mat4", "glm"
+]
+categories = [
+    "data-structures", "graphics", "game-development", "mathematics"
+]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
