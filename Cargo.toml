@@ -7,3 +7,9 @@ edition = "2018"
 
 [dependencies]
 auto_ops = "0.3.0"
+
+[features]
+default = [ "mat-vulkan" ]
+
+mat-row-major = []
+mat-vulkan = []

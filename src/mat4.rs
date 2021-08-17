@@ -4,8 +4,9 @@ use crate::{Quaternion, Vec3, Vec4};
 
 /// A struct representing a 4x4 matrix.
 /// 
-/// It's values are stored in column-major order,
+/// It's values are stored in column-major order by default,
 /// as expected by OpenGL and accepted by all other APIs.
+/// To change this, use feature `mat-row-major`
 #[derive(Debug, Clone, Copy, PartialEq)]
 #[repr(C)]
 pub struct Mat4 {
@@ -19,8 +20,13 @@ impl Default for Mat4 {
     }
 }
 
+#[cfg(not(feature="mat-row-major"))]
 const fn cr(c: usize, r: usize) -> usize {
     r + c * 4
+}
+#[cfg(feature="mat-row-major")]
+const fn cr(c: usize, r: usize) -> usize {
+    r * 4 + c
 }
 
 impl Mat4 {
@@ -102,7 +108,8 @@ impl Mat4 {
 
     /// Creates an orthographic projection matrix
     /// with z mapped to \[0; 1\], as expected by Vulkan.
-    pub fn orthographic_vulkan(l: f32, r: f32, b: f32, t: f32, n: f32, f: f32) -> Self {
+    #[cfg(feature="mat-vulkan")]
+    pub fn orthographic(l: f32, r: f32, b: f32, t: f32, n: f32, f: f32) -> Self {
         let mut res = Self::identity();
 
         res.values[cr(0, 0)] = 2.0 * (r - l);
@@ -119,7 +126,8 @@ impl Mat4 {
 
     /// Creates a perspective projection matrix
     /// with z mapped to \[0; 1\], as expected by Vulkan.
-    pub fn perspective_vulkan(fov_rad: f32, near: f32, far: f32, aspect: f32) -> Self {
+    #[cfg(feature="mat-vulkan")]
+    pub fn perspective(fov_rad: f32, near: f32, far: f32, aspect: f32) -> Self {
         let mut res = Self::identity();
         let thfov = (fov_rad * 0.5).tan();
 
