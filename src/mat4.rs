@@ -108,26 +108,58 @@ impl Mat4 {
 
     /// Creates an orthographic projection matrix
     /// with z mapped to \[0; 1\], as expected by Vulkan.
-    #[cfg(feature="mat-vulkan")]
-    pub fn orthographic(l: f32, r: f32, b: f32, t: f32, n: f32, f: f32) -> Self {
+    pub fn orthographic_vulkan(left: f32, right: f32, bottom: f32, top: f32, near: f32, far: f32) -> Self {
         let mut res = Self::identity();
 
-        res.values[cr(0, 0)] = 2.0 * (r - l);
-        res.values[cr(3, 0)] = (-l - r) / (r - l);
+        let a = 2.0 * (right - left);
+        let b = (-left - right) / (right - left);
+        let c = 2.0 * (top - bottom);
+        let d = (-bottom - top) / (top - bottom);
+        let e = 1.0 / (far - near);
+        let f = -near / (far - near);
 
-        res.values[cr(1, 1)] = 2.0 * (t - b);
-        res.values[cr(3, 1)] = (-b - t) / (t - b);
+        res.values[cr(0, 0)] = a;
+        res.values[cr(3, 0)] = b;
 
-        res.values[cr(2, 2)] = 1.0 / (f - n);
-        res.values[cr(3, 2)] = -n / (f - n);
+        res.values[cr(1, 1)] = c;
+        res.values[cr(3, 1)] = d;
+
+        res.values[cr(2, 2)] = e;
+        res.values[cr(3, 2)] = f;
+
+        res
+    }
+
+    /// Creates an inverse orthographics projection matrix
+    /// with z mapped to \[0; 1\], as expected by Vulkan.
+    /// 
+    /// The world position of a uv/depth pair can be reconstructed with the same code as shown
+    /// in [`inverse_perspective_vulkan()`](Self::inverse_perspective_vulkan())
+    pub fn inverse_orthographic_vulkan(left: f32, right: f32, bottom: f32, top: f32, near: f32, far: f32) -> Self {
+        let mut res = Self::identity();
+
+        let a = 2.0 * (right - left);
+        let b = (-left - right) / (right - left);
+        let c = 2.0 * (top - bottom);
+        let d = (-bottom - top) / (top - bottom);
+        let e = 1.0 / (far - near);
+        let f = -near / (far - near);
+
+        res.values[cr(0, 0)] = 1.0 / a;
+        res.values[cr(3, 0)] = -b / a;
+        
+        res.values[cr(1, 1)] = 1.0 / c;
+        res.values[cr(3, 1)] = -d / c;
+
+        res.values[cr(2, 2)] = 1.0 / e;
+        res.values[cr(3, 2)] = -f / e;
 
         res
     }
 
     /// Creates a perspective projection matrix
     /// with z mapped to \[0; 1\], as expected by Vulkan.
-    #[cfg(feature="mat-vulkan")]
-    pub fn perspective(fov_rad: f32, near: f32, far: f32, aspect: f32) -> Self {
+    pub fn perspective_vulkan(fov_rad: f32, near: f32, far: f32, aspect: f32) -> Self {
         let mut res = Self::identity();
         let thfov = (fov_rad * 0.5).tan();
 
@@ -139,6 +171,35 @@ impl Mat4 {
 
         res.values[cr(2, 3)] = 1.0;
         res.values[cr(3, 3)] = 0.0;
+
+        res
+    }
+
+    /// Creates an inverse perspective matrix
+    /// with z mapped to \[0; 1\], as expected by Vulkan.
+    /// 
+    /// This matrix can be used to reconstruct the world position from a uv/depth pair in a shader.
+    /// This pseudo code can be used:
+    /// ```GLSL
+    /// vec4 clipPos = vec4(uv.xy, depth, 1.0);
+    /// vec4 worldPos = invProjection * clipPos;
+    /// worldPos /= worldPos.w;
+    /// ```
+    pub fn inverse_perspective_vulkan(fov_rad: f32, near: f32, far: f32, aspect: f32) -> Self {
+        let mut res = Self::identity();
+
+        let thfov = (fov_rad * 0.5).tan();
+        let c = far / (far - near);
+        let d = (-far * near) / (far - near);
+
+        res.values[cr(0, 0)] = thfov * aspect;
+        res.values[cr(1, 1)] = thfov;
+
+        res.values[cr(3, 2)] = 1.0;
+
+        res.values[cr(2, 2)] = 0.0;
+        res.values[cr(2, 3)] = 1.0 / d;
+        res.values[cr(3, 3)] = -c / d;
 
         res
     }

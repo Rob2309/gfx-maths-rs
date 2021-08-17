@@ -19,7 +19,6 @@ categories = [
 auto_ops = "0.3.0"
 
 [features]
-default = [ "mat-vulkan" ]
+default = []
 
 mat-row-major = []
-mat-vulkan = []
