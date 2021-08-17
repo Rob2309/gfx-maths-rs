@@ -2,7 +2,8 @@ use std::ops::Neg;
 
 use auto_ops::*;
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq)]
+#[repr(C)]
 pub struct Vec3 {
     pub x: f32,
     pub y: f32,
@@ -74,7 +75,8 @@ impl_op_ex!(* |a: &Vec3, b: &Vec3| -> Vec3 { Vec3{x: a.x * b.x, y: a.y * b.y, z:
 impl_op_ex!(/ |a: &Vec3, b: &Vec3| -> Vec3 { Vec3{x: a.x / b.x, y: a.y / b.y, z: a.z / b.z } });
 
 impl_op_ex_commutative!(* |a: &Vec3, b: &f32| -> Vec3 { Vec3{x: a.x * b, y: a.y * b, z: a.z * b } });
-impl_op_ex_commutative!(/ |a: &Vec3, b: &f32| -> Vec3 { Vec3{x: a.x / b, y: a.y / b, z: a.z / b } });
+impl_op_ex!(/ |a: &Vec3, b: &f32| -> Vec3 { Vec3{x: a.x / b, y: a.y / b, z: a.z / b } });
+impl_op_ex!(/ |a: &f32, b: &Vec3| -> Vec3 { Vec3{x: a / b.x, y: a / b.y, z: a / b.z } });
 
 impl Neg for Vec3 {
     type Output = Vec3;

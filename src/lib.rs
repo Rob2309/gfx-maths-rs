@@ -10,3 +10,6 @@ pub use vec4::*;
 
 pub mod quaternion;
 pub use quaternion::*;
+
+pub mod mat4;
+pub use mat4::*;
