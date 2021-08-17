@@ -19,12 +19,12 @@ impl Default for Quaternion {
 }
 
 impl Quaternion {
-    pub fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
+    pub const fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
         Self{x, y, z, w}
     }
 
     /// Creates (0, 0, 0, 1), which represents no rotation
-    pub fn identity() -> Self {
+    pub const fn identity() -> Self {
         Self{x: 0.0, y: 0.0, z: 0.0, w: 1.0}
     }
 

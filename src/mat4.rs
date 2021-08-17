@@ -31,7 +31,7 @@ const fn cr(c: usize, r: usize) -> usize {
 
 impl Mat4 {
     /// Creates the identity matrix.
-    pub fn identity() -> Self {
+    pub const fn identity() -> Self {
         Self {
             values: [
                 1.0, 0.0, 0.0, 0.0,
@@ -43,7 +43,7 @@ impl Mat4 {
     }
 
     /// Creates a 3D translation matrix.
-    pub fn translate(t: Vec3) -> Self {
+    pub const fn translate(t: Vec3) -> Self {
         let mut res = Self::identity();
 
         res.values[cr(3, 0)] = t.x;
@@ -77,7 +77,7 @@ impl Mat4 {
     }
 
     /// Creates a 3D scale matrix.
-    pub fn scale(s: Vec3) -> Self {
+    pub const fn scale(s: Vec3) -> Self {
         let mut res = Self::identity();
 
         res.values[cr(0, 0)] = s.x;
@@ -205,7 +205,7 @@ impl Mat4 {
     }
 
     /// Returns a value indexed by `column` and `row`
-    pub fn get(&self, column: usize, row: usize) -> f32 {
+    pub const fn get(&self, column: usize, row: usize) -> f32 {
         self.values[cr(column, row)]
     }
 

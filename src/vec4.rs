@@ -19,17 +19,17 @@ impl Default for Vec4 {
 }
 
 impl Vec4 {
-    pub fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
+    pub const fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
         Self{x, y, z, w}
     }
 
     /// Creates (0, 0, 0, 0)
-    pub fn zero() -> Self {
+    pub const fn zero() -> Self {
         Self{x: 0.0, y: 0.0, z: 0.0, w: 0.0}
     }
 
     /// Creates (1, 1, 1, 1)
-    pub fn one() -> Self {
+    pub const fn one() -> Self {
         Self{x: 1.0, y: 1.0, z: 1.0, w: 1.0}
     }
 
