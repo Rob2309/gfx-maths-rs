@@ -9,10 +9,12 @@
 //! The usual operations are implemented via member functions and operator overloads.
 //! Operators should handle almost exactly as they would in GLSL, e.g.
 //! ```
-//! let v = Vec3::new(5, 6, 7);
+//! use gfx_maths_rs::*;
+//! 
+//! let v = Vec3::new(5.0, 6.0, 7.0);
 //! let s = 1.0 / v;
 //! 
-//! let t = Mat4::translate(Vec3::new(1, 0, 0)) * s;
+//! let t = Mat4::translate(Vec3::new(1.0, 0.0, 0.0)) * s;
 //! ```
 //! 
 //! # Notation

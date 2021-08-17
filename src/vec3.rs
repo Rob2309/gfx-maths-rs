@@ -58,12 +58,12 @@ impl Vec3 {
     }
 
     /// Returns the dot product of `self` and `b`
-    pub fn dot(&self, b: &Vec3) -> f32 {
+    pub fn dot(&self, b: Vec3) -> f32 {
         self.x * b.x + self.y * b.y + self.z * b.z
     }
 
     /// Returns the cross product of `self` and `b`
-    pub fn cross(&self, b: &Vec3) -> Vec3 {
+    pub fn cross(&self, b: Vec3) -> Vec3 {
         Vec3{
             x: self.y * b.z - self.z * b.y,
             y: self.z * b.x - self.x * b.z,
@@ -94,4 +94,66 @@ impl Neg for Vec3 {
     fn neg(self) -> Self::Output {
         Vec3{x: -self.x, y: -self.y, z: -self.z}
     }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn operators() {
+        let a = Vec3::new(1.0, 2.0, 3.0);
+        let b = Vec3::new(3.0, 4.0, 5.0);
+        
+        assert_eq!(-a, Vec3{x: -1.0, y: -2.0, z: -3.0});
+
+        assert_eq!(a.sqr_magnitude(), 14.0);
+        assert_eq!(a.magnitude(), 14.0f32.sqrt());
+
+        assert_eq!(a.dot(b), 26.0);
+
+        assert_eq!(a + b, Vec3{x: 4.0, y: 6.0, z: 8.0});
+        assert_eq!(a - b, Vec3{x: -2.0, y: -2.0, z: -2.0});
+        assert_eq!(a * b, Vec3{x: 3.0, y: 8.0, z: 15.0});
+        assert_eq!(a / b, Vec3{x: 1.0 / 3.0, y: 0.5, z: 3.0/5.0});
+
+        assert_eq!(a * 2.0, Vec3{x: 2.0, y: 4.0, z: 6.0});
+        assert_eq!(2.0 * a, Vec3{x: 2.0, y: 4.0, z: 6.0});
+
+        assert_eq!(a / 2.0, Vec3{x: 0.5, y: 1.0, z: 1.5});
+        assert_eq!(2.0 / a, Vec3{x: 2.0, y: 1.0, z: 2.0/3.0});
+
+        let mut c = a;
+
+        assert_eq!(c.normalized(), a / a.magnitude());
+
+        c.normalize();
+        assert_eq!(c, a / a.magnitude());
+
+        c = a;
+        c += b;
+        assert_eq!(c, a + b);
+
+        c = a;
+        c -= b;
+        assert_eq!(c, a - b);
+
+        c = a;
+        c *= b;
+        assert_eq!(c, a * b);
+
+        c = a;
+        c /= b;
+        assert_eq!(c, a / b);
+
+        c = a;
+        c *= 2.0;
+        assert_eq!(c, a * 2.0);
+
+        c = a;
+        c /= 2.0;
+        assert_eq!(c, a / 2.0);
+    }
+
 }
