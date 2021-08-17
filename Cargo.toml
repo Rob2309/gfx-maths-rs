@@ -1,6 +1,6 @@
 [package]
 name = "gfx-maths"
-version = "0.2.1"
+version = "0.2.2"
 authors = [ "Robin Quint" ]
 edition = "2018"
 description = "Implementations for the most essential Graphics Math operations"
@@ -17,6 +17,7 @@ categories = [
 
 [dependencies]
 auto_ops = "0.3.0"
+serde = { version="1.0.127", features=["derive"], optional=true }
 
 [features]
 default = []

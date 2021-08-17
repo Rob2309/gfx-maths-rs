@@ -3,6 +3,7 @@ use crate::Vec3;
 use auto_ops::*;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
+#[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
 #[repr(C)]
 pub struct Quaternion {
     pub x: f32,

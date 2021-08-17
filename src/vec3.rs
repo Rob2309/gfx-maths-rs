@@ -3,6 +3,7 @@ use std::ops::Neg;
 use auto_ops::*;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
+#[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
 #[repr(C)]
 pub struct Vec3 {
     pub x: f32,

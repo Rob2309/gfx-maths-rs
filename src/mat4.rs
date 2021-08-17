@@ -8,6 +8,7 @@ use crate::{Quaternion, Vec3, Vec4};
 /// as expected by OpenGL and accepted by all other APIs.
 /// To change this, use feature `mat-row-major`
 #[derive(Debug, Clone, Copy, PartialEq)]
+#[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
 #[repr(C)]
 pub struct Mat4 {
     pub values: [f32; 4*4],
