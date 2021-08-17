@@ -2,6 +2,10 @@ use auto_ops::*;
 
 use crate::{Quaternion, Vec3, Vec4};
 
+/// A struct representing a 4x4 matrix.
+/// 
+/// It's values are stored in column-major order,
+/// as expected by OpenGL and accepted by all other APIs.
 #[derive(Debug, Clone, Copy, PartialEq)]
 #[repr(C)]
 pub struct Mat4 {
@@ -9,6 +13,7 @@ pub struct Mat4 {
 }
 
 impl Default for Mat4 {
+    /// Creates the identity matrix.
     fn default() -> Self {
         Self::identity()
     }
@@ -19,6 +24,7 @@ const fn cr(c: usize, r: usize) -> usize {
 }
 
 impl Mat4 {
+    /// Creates the identity matrix.
     pub fn identity() -> Self {
         Self {
             values: [
@@ -30,6 +36,7 @@ impl Mat4 {
         }
     }
 
+    /// Creates a 3D translation matrix.
     pub fn translate(t: Vec3) -> Self {
         let mut res = Self::identity();
 
@@ -40,6 +47,7 @@ impl Mat4 {
         res
     }
 
+    /// Creates a 3D rotation matrix.
     pub fn rotate(r: Quaternion) -> Self {
         let mut res = Self::identity();
 
@@ -62,6 +70,7 @@ impl Mat4 {
         res
     }
 
+    /// Creates a 3D scale matrix.
     pub fn scale(s: Vec3) -> Self {
         let mut res = Self::identity();
 
@@ -72,14 +81,27 @@ impl Mat4 {
         res
     }
 
+    /// Creates a 3D local-to-world/object-to-world matrix.
+    /// 
+    /// When multiplying this matrix by a vector, it will be
+    /// - scaled by `s`
+    /// - rotated by `r`
+    /// - translated by `t`
+    /// 
+    /// in this order.
     pub fn local_to_world(t: Vec3, r: Quaternion, s: Vec3) -> Self {
         Self::translate(t) * Self::rotate(r) * Self::scale(s)
     }
 
+    /// Creates a 3D world-to-local/world-to-object matrix.
+    /// 
+    /// This matrix does the opposite of [`local_to_world()`](Self::local_to_world())
     pub fn world_to_local(t: Vec3, r: Quaternion, s: Vec3) -> Self {
         Self::scale(1.0 / s) * Self::rotate(-r) * Self::translate(-t)
     }
 
+    /// Creates an orthographic projection matrix
+    /// with z mapped to \[0; 1\], as expected by Vulkan.
     pub fn orthographic_vulkan(l: f32, r: f32, b: f32, t: f32, n: f32, f: f32) -> Self {
         let mut res = Self::identity();
 
@@ -95,6 +117,8 @@ impl Mat4 {
         res
     }
 
+    /// Creates a perspective projection matrix
+    /// with z mapped to \[0; 1\], as expected by Vulkan.
     pub fn perspective_vulkan(fov_rad: f32, near: f32, far: f32, aspect: f32) -> Self {
         let mut res = Self::identity();
         let thfov = (fov_rad * 0.5).tan();
@@ -111,14 +135,17 @@ impl Mat4 {
         res
     }
 
+    /// Returns a value indexed by `column` and `row`
     pub fn get(&self, column: usize, row: usize) -> f32 {
         self.values[cr(column, row)]
     }
 
+    /// Sets the value indexed by `column` and `row` to `val`
     pub fn set(&mut self, column: usize, row: usize, val: f32) {
         self.values[cr(column, row)] = val;
     }
 
+    /// Returns a transposed copy of `self`.
     pub fn transposed(&self) -> Mat4 {
         let mut res = Mat4::identity();
 

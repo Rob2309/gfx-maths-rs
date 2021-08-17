@@ -10,6 +10,7 @@ pub struct Vec2 {
 }
 
 impl Default for Vec2 {
+    /// Creates a zero vector
     fn default() -> Self {
         Self::zero()
     }
@@ -20,32 +21,41 @@ impl Vec2 {
         Self{x, y}
     }
 
+    /// Creates (0, 0)
     pub fn zero() -> Self {
         Self{x: 0.0, y: 0.0}
     }
 
+    /// Creates (1, 1)
     pub fn one() -> Self {
         Self{x: 1.0, y: 1.0}
     }
 
+    /// Returns the square of the vector's length.
+    /// 
+    /// Faster to compute than [`magnitude()`](Self::magnitude())
     pub fn sqr_magnitude(&self) -> f32 {
         self.x * self.x + self.y * self.y
     }
 
+    /// Returns the vector's length
     pub fn magnitude(&self) -> f32 {
         self.sqr_magnitude().sqrt()
     }
 
+    /// Normalizes `self` in place
     pub fn normalize(&mut self) -> &mut Self {
         let m = self.magnitude();
         self.x /= m;
         self.y /= m;
         self
     }
+    /// Returns a normalized copy of `self`
     pub fn normalized(&self) -> Self {
         *self.clone().normalize()
     }
 
+    /// Returns the dot product of `self` and `b`
     pub fn dot(&self, b: &Vec2) -> f32 {
         self.x * b.x + self.y * b.y
     }

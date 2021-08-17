@@ -12,6 +12,7 @@ pub struct Quaternion {
 }
 
 impl Default for Quaternion {
+    /// Creates an identity rotation
     fn default() -> Self {
         Self::identity()
     }
@@ -22,10 +23,14 @@ impl Quaternion {
         Self{x, y, z, w}
     }
 
+    /// Creates (0, 0, 0, 1), which represents no rotation
     pub fn identity() -> Self {
         Self{x: 0.0, y: 0.0, z: 0.0, w: 1.0}
     }
 
+    /// Creates a rotation of `radians` radians around `axis`.
+    /// 
+    /// The rotation will be counter clock wise when looking along the direction of `axis`.
     pub fn axis_angle(mut axis: Vec3, radians: f32) -> Self {
         axis.normalize();
         axis *= (radians * 0.5).sin();
@@ -38,6 +43,7 @@ impl Quaternion {
         }
     }
 
+    /// Returns the vector (1, 0, 0) rotated by `self`
     pub fn right(&self) -> Vec3 {
         Vec3 {
             x: self.x * self.x - self.y * self.y - self.z * self.z + self.w * self.w,
@@ -46,6 +52,7 @@ impl Quaternion {
         }
     }
 
+    /// Returns the vector (0, 1, 0) rotated by `self`
     pub fn up(&self) -> Vec3 {
         Vec3 {
             x: 2.0 * (self.x * self.y - self.z * self.w),
@@ -54,6 +61,7 @@ impl Quaternion {
         }
     }
 
+    /// Returns the vector (0, 0, 1) rotated by `self`
     pub fn forward(&self) -> Vec3 {
         Vec3 {
             x: 2.0 * (self.x * self.z + self.y * self.w),
