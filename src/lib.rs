@@ -9,7 +9,7 @@
 //! The usual operations are implemented via member functions and operator overloads.
 //! Operators should handle almost exactly as they would in GLSL, e.g.
 //! ```
-//! use gfx_maths_rs::*;
+//! use gfx_maths::*;
 //! 
 //! let v = Vec3::new(5.0, 6.0, 7.0);
 //! let s = 1.0 / v;
