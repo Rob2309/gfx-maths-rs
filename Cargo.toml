@@ -7,8 +7,7 @@ description = "Implementations for the most essential Graphics Math operations"
 repository = "https://github.com/rob2309/gfx-maths-rs"
 license = "MIT"
 keywords = [
-    "graphics", "vector", "matrix", "quaternion", "vulkan", "opengl", "maths", "directx",
-    "vec2", "vec3", "vec4", "mat4", "glm"
+    "graphics", "maths", "glm", "quaternion", "vulkan"
 ]
 categories = [
     "data-structures", "graphics", "game-development", "mathematics"
