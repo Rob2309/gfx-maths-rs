@@ -97,6 +97,12 @@ impl Neg for Vec3 {
     }
 }
 
+impl From<[f32; 3]> for Vec3 {
+    fn from(d: [f32; 3]) -> Self {
+        Self{x: d[0], y: d[1], z: d[2]}
+    }
+}
+
 
 #[cfg(test)]
 mod tests {

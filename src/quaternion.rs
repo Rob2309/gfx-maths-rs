@@ -104,3 +104,9 @@ impl_op_ex!(- |a: &Quaternion| -> Quaternion {
         w: a.w,
     }
 });
+
+impl From<[f32; 4]> for Quaternion {
+    fn from(d: [f32; 4]) -> Self {
+        Self{x: d[0], y: d[1], z: d[2], w: d[3]}
+    }
+}

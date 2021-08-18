@@ -261,3 +261,20 @@ impl_op_ex!(* |a: &Mat4, b: &Vec3| -> Vec3 {
         z: a.values[cr(0, 2)] * b.x + a.values[cr(1, 2)] * b.y + a.values[cr(2, 2)] * b.z,
     }
 });
+
+impl From<[f32; 16]> for Mat4 {
+    fn from(d: [f32; 16]) -> Self {
+        Self{values: d}
+    }
+}
+
+impl From<[[f32; 4]; 4]> for Mat4 {
+    fn from(d: [[f32; 4]; 4]) -> Self {
+        Self{values: [
+            d[0][0], d[0][1], d[0][2], d[0][3],
+            d[1][0], d[1][1], d[1][2], d[1][3],
+            d[2][0], d[2][1], d[2][2], d[2][3],
+            d[3][0], d[3][1], d[3][2], d[3][3],
+        ]}
+    }
+}

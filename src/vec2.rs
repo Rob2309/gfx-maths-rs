@@ -86,6 +86,12 @@ impl Neg for Vec2 {
     }
 }
 
+impl From<[f32; 2]> for Vec2 {
+    fn from(d: [f32; 2]) -> Self {
+        Self{x: d[0], y: d[1]}
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
