@@ -131,6 +131,30 @@ impl Mat4 {
         res
     }
 
+    /// Creates an orthographic projection matrix
+    /// with z mapped to \[-1; 1\], as expected by OpenGL.
+    pub fn orthographic_opengl(left: f32, right: f32, bottom: f32, top: f32, near: f32, far: f32) -> Self {
+        let mut res = Self::identity();
+
+        let a = 2.0 * (right - left);
+        let b = (-left - right) / (right - left);
+        let c = 2.0 * (top - bottom);
+        let d = (-bottom - top) / (top - bottom);
+        let e = 2.0 * (far - near);
+        let f = (-near - far) / (far - near);
+
+        res.values[cr(0, 0)] = a;
+        res.values[cr(3, 0)] = b;
+
+        res.values[cr(1, 1)] = c;
+        res.values[cr(3, 1)] = d;
+
+        res.values[cr(2, 2)] = e;
+        res.values[cr(3, 2)] = f;
+
+        res
+    }
+
     /// Creates an inverse orthographics projection matrix
     /// with z mapped to \[0; 1\], as expected by Vulkan.
     /// 
@@ -145,6 +169,33 @@ impl Mat4 {
         let d = (-bottom - top) / (top - bottom);
         let e = 1.0 / (far - near);
         let f = -near / (far - near);
+
+        res.values[cr(0, 0)] = 1.0 / a;
+        res.values[cr(3, 0)] = -b / a;
+        
+        res.values[cr(1, 1)] = 1.0 / c;
+        res.values[cr(3, 1)] = -d / c;
+
+        res.values[cr(2, 2)] = 1.0 / e;
+        res.values[cr(3, 2)] = -f / e;
+
+        res
+    }
+
+    /// Creates an inverse orthographics projection matrix
+    /// with z mapped to \[-1; 1\], as expected by OpenGL.
+    /// 
+    /// The world position of a uv/depth pair can be reconstructed with the same code as shown
+    /// in [`inverse_perspective_opengl()`](Self::inverse_perspective_opengl())
+    pub fn inverse_orthographic_opengl(left: f32, right: f32, bottom: f32, top: f32, near: f32, far: f32) -> Self {
+        let mut res = Self::identity();
+
+        let a = 2.0 * (right - left);
+        let b = (-left - right) / (right - left);
+        let c = 2.0 * (top - bottom);
+        let d = (-bottom - top) / (top - bottom);
+        let e = 2.0 * (far - near);
+        let f = (-near - far) / (far - near);
 
         res.values[cr(0, 0)] = 1.0 / a;
         res.values[cr(3, 0)] = -b / a;
@@ -176,6 +227,24 @@ impl Mat4 {
         res
     }
 
+    /// Creates a perspective projection matrix
+    /// with z mapped to \[-1; 1\], as expected by OpenGL.
+    pub fn perspective_opengl(fov_rad: f32, near: f32, far: f32, aspect: f32) -> Self {
+        let mut res = Self::identity();
+        let thfov = (fov_rad * 0.5).tan();
+
+        res.values[cr(0, 0)] = 1.0 / (thfov * aspect);
+        res.values[cr(1, 1)] = 1.0 / thfov;
+        
+        res.values[cr(2, 2)] = (far + near) / (far - near);
+        res.values[cr(3, 2)] = (-2.0 * far * near) / (far - near);
+
+        res.values[cr(2, 3)] = 1.0;
+        res.values[cr(3, 3)] = 0.0;
+
+        res
+    }
+
     /// Creates an inverse perspective matrix
     /// with z mapped to \[0; 1\], as expected by Vulkan.
     /// 
@@ -192,6 +261,35 @@ impl Mat4 {
         let thfov = (fov_rad * 0.5).tan();
         let c = far / (far - near);
         let d = (-far * near) / (far - near);
+
+        res.values[cr(0, 0)] = thfov * aspect;
+        res.values[cr(1, 1)] = thfov;
+
+        res.values[cr(3, 2)] = 1.0;
+
+        res.values[cr(2, 2)] = 0.0;
+        res.values[cr(2, 3)] = 1.0 / d;
+        res.values[cr(3, 3)] = -c / d;
+
+        res
+    }
+
+    /// Creates an inverse perspective matrix
+    /// with z mapped to \[-1; 1\], as expected by OpenGL.
+    /// 
+    /// This matrix can be used to reconstruct the world position from a uv/depth pair in a shader.
+    /// This pseudo code can be used:
+    /// ```GLSL
+    /// vec4 clipPos = vec4(uv.xy, depth * 2.0 - 1.0, 1.0);
+    /// vec4 worldPos = invProjection * clipPos;
+    /// worldPos /= worldPos.w;
+    /// ```
+    pub fn inverse_perspective_opengl(fov_rad: f32, near: f32, far: f32, aspect: f32) -> Self {
+        let mut res = Self::identity();
+
+        let thfov = (fov_rad * 0.5).tan();
+        let c = (far + near) / (far - near);
+        let d = (-2.0 * far * near) / (far - near);
 
         res.values[cr(0, 0)] = thfov * aspect;
         res.values[cr(1, 1)] = thfov;
