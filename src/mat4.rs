@@ -325,6 +325,26 @@ impl Mat4 {
 
         res
     }
+
+    /// Returns the underlying values as a slice
+    pub fn as_slice(&self) -> &[f32] {
+        &self.values
+    }
+
+    /// Returns the underlying values as a mutable slice
+    pub fn as_mut_slice(&mut self) -> &mut [f32] {
+        &mut self.values
+    }
+
+    /// Returns the underlying values as a pointer with no size information
+    pub fn as_ptr(&self) -> *const f32 {
+        self.values.as_ptr()
+    }
+
+    /// Returns the underlying values as a mutable pointer with no size information
+    pub fn as_mut_ptr(&mut self) -> *mut f32 {
+        self.values.as_mut_ptr()
+    }
 }
 
 impl_op_ex!(* |a: &Mat4, b: &Mat4| -> Mat4 {
