@@ -396,3 +396,17 @@ impl From<[[f32; 4]; 4]> for Mat4 {
         ]}
     }
 }
+
+impl std::ops::Index<(usize, usize)> for Mat4 {
+    type Output = f32;
+
+    fn index(&self, (c, r): (usize, usize)) -> &Self::Output {
+        &self.values[cr(c, r)]
+    }
+}
+
+impl std::ops::IndexMut<(usize, usize)> for Mat4 {
+    fn index_mut(&mut self, (c, r): (usize, usize)) -> &mut Self::Output {
+        &mut self.values[cr(c, r)]
+    }
+}
