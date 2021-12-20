@@ -325,6 +325,26 @@ impl Mat4 {
 
         res
     }
+
+    /// Returns the underlying values as a slice
+    pub fn as_slice(&self) -> &[f32] {
+        &self.values
+    }
+
+    /// Returns the underlying values as a mutable slice
+    pub fn as_mut_slice(&mut self) -> &mut [f32] {
+        &mut self.values
+    }
+
+    /// Returns the underlying values as a pointer with no size information
+    pub fn as_ptr(&self) -> *const f32 {
+        self.values.as_ptr()
+    }
+
+    /// Returns the underlying values as a mutable pointer with no size information
+    pub fn as_mut_ptr(&mut self) -> *mut f32 {
+        self.values.as_mut_ptr()
+    }
 }
 
 impl_op_ex!(* |a: &Mat4, b: &Mat4| -> Mat4 {
@@ -374,5 +394,19 @@ impl From<[[f32; 4]; 4]> for Mat4 {
             d[2][0], d[2][1], d[2][2], d[2][3],
             d[3][0], d[3][1], d[3][2], d[3][3],
         ]}
+    }
+}
+
+impl std::ops::Index<(usize, usize)> for Mat4 {
+    type Output = f32;
+
+    fn index(&self, (c, r): (usize, usize)) -> &Self::Output {
+        &self.values[cr(c, r)]
+    }
+}
+
+impl std::ops::IndexMut<(usize, usize)> for Mat4 {
+    fn index_mut(&mut self, (c, r): (usize, usize)) -> &mut Self::Output {
+        &mut self.values[cr(c, r)]
     }
 }
