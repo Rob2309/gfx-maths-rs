@@ -112,9 +112,9 @@ impl Mat4 {
     pub fn orthographic_vulkan(left: f32, right: f32, bottom: f32, top: f32, near: f32, far: f32) -> Self {
         let mut res = Self::identity();
 
-        let a = 2.0 * (right - left);
+        let a = 2.0 / (right - left);
         let b = (-left - right) / (right - left);
-        let c = 2.0 * (top - bottom);
+        let c = 2.0 / (top - bottom);
         let d = (-bottom - top) / (top - bottom);
         let e = 1.0 / (far - near);
         let f = -near / (far - near);
@@ -136,11 +136,11 @@ impl Mat4 {
     pub fn orthographic_opengl(left: f32, right: f32, bottom: f32, top: f32, near: f32, far: f32) -> Self {
         let mut res = Self::identity();
 
-        let a = 2.0 * (right - left);
+        let a = 2.0 / (right - left);
         let b = (-left - right) / (right - left);
-        let c = 2.0 * (top - bottom);
+        let c = 2.0 / (top - bottom);
         let d = (-bottom - top) / (top - bottom);
-        let e = 2.0 * (far - near);
+        let e = 2.0 / (far - near);
         let f = (-near - far) / (far - near);
 
         res.values[cr(0, 0)] = a;
