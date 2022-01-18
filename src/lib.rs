@@ -5,22 +5,29 @@
 //! - [`Vec4`]
 //! - [`Quaternion`]
 //! - [`Mat4`]
-//! 
+//!
 //! The usual operations are implemented via member functions and operator overloads.
 //! Operators should handle almost exactly as they would in GLSL, e.g.
 //! ```
 //! use gfx_maths::*;
-//! 
+//!
 //! let v = Vec3::new(5.0, 6.0, 7.0);
 //! let s = 1.0 / v;
-//! 
+//!
 //! let t = Mat4::translate(Vec3::new(1.0, 0.0, 0.0)) * s;
 //! ```
-//! 
+//!
 //! # Notation
 //! Vectors are always treated as column vectors, which is why
 //! only [`Mat4`] * [`Vec4`] is implemented and not [`Vec4`] * [`Mat4`].
 
+#![allow(unknown_lints)]
+#![warn(clippy::all, clippy::pedantic)]
+#![allow(
+    clippy::float_cmp,
+    clippy::must_use_candidate,
+    clippy::many_single_char_names
+)]
 
 pub mod vec2;
 pub use vec2::*;

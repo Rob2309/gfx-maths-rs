@@ -1,9 +1,9 @@
 use crate::Vec3;
 
-use auto_ops::*;
+use auto_ops::impl_op_ex;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
-#[cfg_attr(feature="serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[repr(C)]
 pub struct Quaternion {
     pub x: f32,
@@ -21,16 +21,21 @@ impl Default for Quaternion {
 
 impl Quaternion {
     pub const fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
-        Self{x, y, z, w}
+        Self { x, y, z, w }
     }
 
     /// Creates (0, 0, 0, 1), which represents no rotation
     pub const fn identity() -> Self {
-        Self{x: 0.0, y: 0.0, z: 0.0, w: 1.0}
+        Self {
+            x: 0.0,
+            y: 0.0,
+            z: 0.0,
+            w: 1.0,
+        }
     }
 
     /// Creates a rotation of `radians` radians around `axis`.
-    /// 
+    ///
     /// The rotation will be counter clock wise when looking along the direction of `axis`.
     pub fn axis_angle(mut axis: Vec3, radians: f32) -> Self {
         axis.normalize();
@@ -72,14 +77,16 @@ impl Quaternion {
     }
 }
 
-impl_op_ex!(* |a: &Quaternion, b: &Quaternion| -> Quaternion { Quaternion {
-    x: a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y,
-    y: a.w * b.y + a.y * b.w + a.z * b.x - a.x * b.z,
-    z: a.w * b.z + a.z * b.w + a.x * b.y - a.y * b.x,
-    w: a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z,
-} });
+impl_op_ex!(*|a: &Quaternion, b: &Quaternion| -> Quaternion {
+    Quaternion {
+        x: a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y,
+        y: a.w * b.y + a.y * b.w + a.z * b.x - a.x * b.z,
+        z: a.w * b.z + a.z * b.w + a.x * b.y - a.y * b.x,
+        w: a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z,
+    }
+});
 
-impl_op_ex!(* |a: &Quaternion, b: &Vec3| -> Vec3 {
+impl_op_ex!(*|a: &Quaternion, b: &Vec3| -> Vec3 {
     let x2 = a.x * a.x;
     let y2 = a.y * a.y;
     let z2 = a.z * a.z;
@@ -90,13 +97,16 @@ impl_op_ex!(* |a: &Quaternion, b: &Vec3| -> Vec3 {
     let zz = a.z * b.z;
 
     Vec3 {
-        x: b.x * (x2 - y2 - z2 + w2) + 2.0 * (a.x * yy + a.x * zz + a.w * a.y * b.z - a.w * a.z * b.y),
-        y: b.y * (-x2 + y2 - z2 + w2) + 2.0 * (a.y * xx + a.y * zz + a.w * a.z * b.x - a.w * a.x * b.z),
-        z: b.z * (-x2 - y2 + z2 + w2) + 2.0 * (a.z * xx + a.z * yy + a.w * a.x * b.y - a.w * a.y * b.x),
+        x: b.x * (x2 - y2 - z2 + w2)
+            + 2.0 * (a.x * yy + a.x * zz + a.w * a.y * b.z - a.w * a.z * b.y),
+        y: b.y * (-x2 + y2 - z2 + w2)
+            + 2.0 * (a.y * xx + a.y * zz + a.w * a.z * b.x - a.w * a.x * b.z),
+        z: b.z * (-x2 - y2 + z2 + w2)
+            + 2.0 * (a.z * xx + a.z * yy + a.w * a.x * b.y - a.w * a.y * b.x),
     }
 });
 
-impl_op_ex!(- |a: &Quaternion| -> Quaternion {
+impl_op_ex!(-|a: &Quaternion| -> Quaternion {
     Quaternion {
         x: -a.x,
         y: -a.y,
@@ -107,6 +117,11 @@ impl_op_ex!(- |a: &Quaternion| -> Quaternion {
 
 impl From<[f32; 4]> for Quaternion {
     fn from(d: [f32; 4]) -> Self {
-        Self{x: d[0], y: d[1], z: d[2], w: d[3]}
+        Self {
+            x: d[0],
+            y: d[1],
+            z: d[2],
+            w: d[3],
+        }
     }
 }
