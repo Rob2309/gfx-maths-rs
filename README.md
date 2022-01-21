@@ -1,3 +1,7 @@
+[![MIT LICENSE](https://img.shields.io/crates/l/gfx-maths?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
+[![CI](https://img.shields.io/github/workflow/status/rob2309/gfx-maths-rs/Continuous%20Integration?label=CI&style=for-the-badge)](https://github.com/Rob2309/gfx-maths-rs/actions)
+[![DOCS](https://img.shields.io/docsrs/gfx-maths?style=for-the-badge)](https://docs.rs/gfx-maths)
+
 # GFX Maths
 This crate implements all the basic mathematical structures and operations
 that are needed for almost any graphical program, namely:
