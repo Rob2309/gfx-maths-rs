@@ -28,6 +28,8 @@ jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
+    outputs:
+      test-coverage: target/coverage/coverage.json
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -36,10 +38,21 @@ jobs:
         with:
           profile: minimal
           toolchain: stable
+          components: llvm-tools-preview
+      - name: Install grcov
+        uses: actions-rs/cargo@v1
+        with:
+          command: install
+          arg: grcov
       - name: Run tests
         uses: actions-rs/cargo@v1
+        env:
+          RUSTFLAGS: -Zinstrument-coverage
+          LLVM_PROFILE_FILE: "cov-%p-%m.profraw"
         with:
           command: test
           arg: --workspace --all-targets
+      - name: "Generate coverage"
+        run: grcov --ignore-not-existing --binary-path=target/debug/deps -o target/coverage -t html -s . .
 
 
