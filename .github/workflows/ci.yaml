@@ -28,8 +28,6 @@ jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
-    outputs:
-      test-coverage: target/coverage/coverage.json
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -55,5 +53,9 @@ jobs:
           args: --workspace --all-targets
       - name: "Generate coverage"
         run: grcov --ignore-not-existing --binary-path=target/debug/deps -o target/coverage -t html -s . .
-
+      - name: "Upload coverage"
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-coverage
+          path: target/coverage/coverage.json
 
