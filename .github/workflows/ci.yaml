@@ -43,7 +43,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: install
-          arg: grcov
+          args: grcov
       - name: Run tests
         uses: actions-rs/cargo@v1
         env:
@@ -51,7 +51,7 @@ jobs:
           LLVM_PROFILE_FILE: "cov-%p-%m.profraw"
         with:
           command: test
-          arg: --workspace --all-targets
+          args: --workspace --all-targets
       - name: "Generate coverage"
         run: grcov --ignore-not-existing --binary-path=target/debug/deps -o target/coverage -t html -s . .
 
