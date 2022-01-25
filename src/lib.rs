@@ -26,7 +26,8 @@
 #![allow(
     clippy::float_cmp,
     clippy::must_use_candidate,
-    clippy::many_single_char_names
+    clippy::many_single_char_names,
+    clippy::too_many_lines
 )]
 
 pub mod vec2;
