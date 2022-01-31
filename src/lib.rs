@@ -22,13 +22,7 @@
 //! only [`Mat4`] * [`Vec4`] is implemented and not [`Vec4`] * [`Mat4`].
 
 #![allow(unknown_lints)]
-#![warn(clippy::all, clippy::pedantic)]
-#![allow(
-    clippy::float_cmp,
-    clippy::must_use_candidate,
-    clippy::many_single_char_names,
-    clippy::too_many_lines
-)]
+#![warn(clippy::all)]
 
 pub mod vec2;
 pub use vec2::*;

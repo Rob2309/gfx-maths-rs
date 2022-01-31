@@ -75,6 +75,50 @@ impl Quaternion {
             z: -self.x * self.x - self.y * self.y + self.z * self.z + self.w * self.w,
         }
     }
+
+    pub fn from_euler_radians_zyx(euler: &Vec3) -> Self {
+        let cx = (euler.x * 0.5).cos();
+        let cy = (euler.y * 0.5).cos();
+        let cz = (euler.z * 0.5).cos();
+
+        let sx = (euler.x * 0.5).sin();
+        let sy = (euler.y * 0.5).sin();
+        let sz = (euler.z * 0.5).sin();
+
+        Self {
+            x: sx * cy * cz - cx * sy * sz,
+            y: cx * sy * cz + sx * cy * sz,
+            z: cx * cy * sz - sx * sy * cz,
+            w: cx * cy * cz + sx * sy * sz,
+        }
+    }
+
+    pub fn from_euler_angles_zyx(euler: &Vec3) -> Self {
+        Self::from_euler_radians_zyx(&Vec3::new(
+            euler.x.to_radians(),
+            euler.y.to_radians(),
+            euler.z.to_radians(),
+        ))
+    }
+
+    pub fn to_euler_radians_zyx(&self) -> Vec3 {
+        Vec3 {
+            x: f32::atan2(
+                2.0 * (self.w * self.x + self.y * self.z),
+                1.0 - 2.0 * (self.x * self.x + self.y * self.y),
+            ),
+            y: f32::asin(2.0 * (self.w * self.y - self.z * self.x)),
+            z: f32::atan2(
+                2.0 * (self.w * self.z + self.x * self.y),
+                1.0 - 2.0 * (self.y * self.y + self.z * self.z),
+            ),
+        }
+    }
+
+    pub fn to_euler_angles_zyx(&self) -> Vec3 {
+        let rad = self.to_euler_radians_zyx();
+        Vec3::new(rad.x.to_degrees(), rad.y.to_degrees(), rad.z.to_degrees())
+    }
 }
 
 impl_op_ex!(*|a: &Quaternion, b: &Quaternion| -> Quaternion {
