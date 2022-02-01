@@ -76,6 +76,9 @@ impl Quaternion {
         }
     }
 
+    /// Creates a Quaternion from euler angles in radians
+    ///
+    /// The rotation order is Z -> Y -> X
     pub fn from_euler_radians_zyx(euler: &Vec3) -> Self {
         let cx = (euler.x * 0.5).cos();
         let cy = (euler.y * 0.5).cos();
@@ -93,6 +96,9 @@ impl Quaternion {
         }
     }
 
+    /// Creates a Quaternion from euler angles in degrees
+    ///
+    /// The rotation order is Z -> Y -> X
     pub fn from_euler_angles_zyx(euler: &Vec3) -> Self {
         Self::from_euler_radians_zyx(&Vec3::new(
             euler.x.to_radians(),
@@ -101,6 +107,9 @@ impl Quaternion {
         ))
     }
 
+    /// Converts this Quaternion to euler angles in radians
+    ///
+    /// The rotation order is Z -> Y -> X
     pub fn to_euler_radians_zyx(&self) -> Vec3 {
         Vec3 {
             x: f32::atan2(
@@ -115,6 +124,9 @@ impl Quaternion {
         }
     }
 
+    /// Converts this Quaternion to euler angles in degrees
+    ///
+    /// The rotation order is Z -> Y -> X
     pub fn to_euler_angles_zyx(&self) -> Vec3 {
         let rad = self.to_euler_radians_zyx();
         Vec3::new(rad.x.to_degrees(), rad.y.to_degrees(), rad.z.to_degrees())
