@@ -2,6 +2,8 @@ use std::ops::Neg;
 
 use auto_ops::{impl_op_ex, impl_op_ex_commutative};
 
+use crate::Vec4;
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[repr(C)]
@@ -81,6 +83,135 @@ impl Vec3 {
             z: self.x * b.y - self.y * b.x,
         }
     }
+
+    pub fn extend(&self, w: f32) -> Vec4 {
+        Vec4 {
+            x: self.x,
+            y: self.y,
+            z: self.z,
+            w,
+        }
+    }
+
+    swizzle!(x, x);
+    swizzle!(x, y);
+    swizzle!(x, z);
+    swizzle!(y, x);
+    swizzle!(y, y);
+    swizzle!(y, z);
+    swizzle!(z, x);
+    swizzle!(z, y);
+    swizzle!(z, z);
+
+    swizzle!(x, x, x);
+    swizzle!(x, x, y);
+    swizzle!(x, x, z);
+    swizzle!(x, y, x);
+    swizzle!(x, y, y);
+    swizzle!(x, y, z);
+    swizzle!(x, z, x);
+    swizzle!(x, z, y);
+    swizzle!(x, z, z);
+    swizzle!(y, x, x);
+    swizzle!(y, x, y);
+    swizzle!(y, x, z);
+    swizzle!(y, y, x);
+    swizzle!(y, y, y);
+    swizzle!(y, y, z);
+    swizzle!(y, z, x);
+    swizzle!(y, z, y);
+    swizzle!(y, z, z);
+    swizzle!(z, x, x);
+    swizzle!(z, x, y);
+    swizzle!(z, x, z);
+    swizzle!(z, y, x);
+    swizzle!(z, y, y);
+    swizzle!(z, y, z);
+    swizzle!(z, z, x);
+    swizzle!(z, z, y);
+    swizzle!(z, z, z);
+
+    swizzle!(x, x, x, x);
+    swizzle!(x, x, x, y);
+    swizzle!(x, x, x, z);
+    swizzle!(x, x, y, x);
+    swizzle!(x, x, y, y);
+    swizzle!(x, x, y, z);
+    swizzle!(x, x, z, x);
+    swizzle!(x, x, z, y);
+    swizzle!(x, x, z, z);
+    swizzle!(x, y, x, x);
+    swizzle!(x, y, x, y);
+    swizzle!(x, y, x, z);
+    swizzle!(x, y, y, x);
+    swizzle!(x, y, y, y);
+    swizzle!(x, y, y, z);
+    swizzle!(x, y, z, x);
+    swizzle!(x, y, z, y);
+    swizzle!(x, y, z, z);
+    swizzle!(x, z, x, x);
+    swizzle!(x, z, x, y);
+    swizzle!(x, z, x, z);
+    swizzle!(x, z, y, x);
+    swizzle!(x, z, y, y);
+    swizzle!(x, z, y, z);
+    swizzle!(x, z, z, x);
+    swizzle!(x, z, z, y);
+    swizzle!(x, z, z, z);
+    swizzle!(y, x, x, x);
+    swizzle!(y, x, x, y);
+    swizzle!(y, x, x, z);
+    swizzle!(y, x, y, x);
+    swizzle!(y, x, y, y);
+    swizzle!(y, x, y, z);
+    swizzle!(y, x, z, x);
+    swizzle!(y, x, z, y);
+    swizzle!(y, x, z, z);
+    swizzle!(y, y, x, x);
+    swizzle!(y, y, x, y);
+    swizzle!(y, y, x, z);
+    swizzle!(y, y, y, x);
+    swizzle!(y, y, y, y);
+    swizzle!(y, y, y, z);
+    swizzle!(y, y, z, x);
+    swizzle!(y, y, z, y);
+    swizzle!(y, y, z, z);
+    swizzle!(y, z, x, x);
+    swizzle!(y, z, x, y);
+    swizzle!(y, z, x, z);
+    swizzle!(y, z, y, x);
+    swizzle!(y, z, y, y);
+    swizzle!(y, z, y, z);
+    swizzle!(y, z, z, x);
+    swizzle!(y, z, z, y);
+    swizzle!(y, z, z, z);
+    swizzle!(z, x, x, x);
+    swizzle!(z, x, x, y);
+    swizzle!(z, x, x, z);
+    swizzle!(z, x, y, x);
+    swizzle!(z, x, y, y);
+    swizzle!(z, x, y, z);
+    swizzle!(z, x, z, x);
+    swizzle!(z, x, z, y);
+    swizzle!(z, x, z, z);
+    swizzle!(z, y, x, x);
+    swizzle!(z, y, x, y);
+    swizzle!(z, y, x, z);
+    swizzle!(z, y, y, x);
+    swizzle!(z, y, y, y);
+    swizzle!(z, y, y, z);
+    swizzle!(z, y, z, x);
+    swizzle!(z, y, z, y);
+    swizzle!(z, y, z, z);
+    swizzle!(z, z, x, x);
+    swizzle!(z, z, x, y);
+    swizzle!(z, z, x, z);
+    swizzle!(z, z, y, x);
+    swizzle!(z, z, y, y);
+    swizzle!(z, z, y, z);
+    swizzle!(z, z, z, x);
+    swizzle!(z, z, z, y);
+    swizzle!(z, z, z, z);
 }
 
 impl_op_ex!(+= |a: &mut Vec3, b: &Vec3| { a.x += b.x; a.y += b.y; a.z += b.z; });

@@ -2,6 +2,8 @@ use std::ops::Neg;
 
 use auto_ops::{impl_op_ex, impl_op_ex_commutative};
 
+use crate::Vec3;
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[repr(C)]
@@ -61,6 +63,45 @@ impl Vec2 {
     pub fn dot(&self, b: Vec2) -> f32 {
         self.x * b.x + self.y * b.y
     }
+
+    pub fn extend(&self, z: f32) -> Vec3 {
+        Vec3 {
+            x: self.x,
+            y: self.y,
+            z,
+        }
+    }
+
+    swizzle!(x, x);
+    swizzle!(x, y);
+    swizzle!(y, x);
+    swizzle!(y, y);
+
+    swizzle!(x, x, x);
+    swizzle!(x, x, y);
+    swizzle!(x, y, x);
+    swizzle!(x, y, y);
+    swizzle!(y, x, x);
+    swizzle!(y, x, y);
+    swizzle!(y, y, x);
+    swizzle!(y, y, y);
+
+    swizzle!(x, x, x, x);
+    swizzle!(x, x, x, y);
+    swizzle!(x, x, y, x);
+    swizzle!(x, x, y, y);
+    swizzle!(x, y, x, x);
+    swizzle!(x, y, x, y);
+    swizzle!(x, y, y, x);
+    swizzle!(x, y, y, y);
+    swizzle!(y, x, x, x);
+    swizzle!(y, x, x, y);
+    swizzle!(y, x, y, x);
+    swizzle!(y, x, y, y);
+    swizzle!(y, y, x, x);
+    swizzle!(y, y, x, y);
+    swizzle!(y, y, y, x);
+    swizzle!(y, y, y, y);
 }
 
 impl_op_ex!(+= |a: &mut Vec2, b: &Vec2| { a.x += b.x; a.y += b.y; });

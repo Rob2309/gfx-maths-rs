@@ -23,6 +23,12 @@
 
 #![allow(unknown_lints)]
 #![warn(clippy::all)]
+// Used to make docs.rs more readable
+#![cfg_attr(doc, feature(doc_auto_cfg))]
+#![cfg_attr(doc, feature(doc_cfg))]
+
+#[macro_use]
+mod macros;
 
 pub mod vec2;
 pub use vec2::*;
