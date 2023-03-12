@@ -1,4 +1,4 @@
-use std::{ops::Neg, fmt::Display};
+use std::{fmt::Display, ops::Neg};
 
 use auto_ops::{impl_op_ex, impl_op_ex_commutative};
 
