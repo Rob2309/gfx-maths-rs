@@ -1,11 +1,34 @@
-name: Continuous Integration
-
 on:
   push:
     branches:
-      - "*"
+      - master
   pull_request:
 
+name: CI
+
 jobs:
-  lints-and-tests:
-    uses: rob2309/workflows/.github/workflows/rust-code-check.yaml@master
+  fmt:
+    name: Check Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Check cargo fmt
+        run: cargo fmt --all -- --check
+  
+  lints:
+    name: Check lints
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Check clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+  tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: run tests
+        run: cargo test --workspace --all-targets
+      - name: run doctests
+        run: cargo +nightly test --workspace --doc
