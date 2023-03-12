@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use crate::Vec3;
 
 use auto_ops::impl_op_ex;
@@ -16,6 +18,13 @@ impl Default for Quaternion {
     /// Creates an identity rotation
     fn default() -> Self {
         Self::identity()
+    }
+}
+
+impl Display for Quaternion {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let Self { x, y, z, w } = self;
+        write!(f, "({x}, {y}, {z}, {w})")
     }
 }
 

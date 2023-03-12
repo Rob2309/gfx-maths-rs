@@ -1,4 +1,4 @@
-use std::ops::Neg;
+use std::{ops::Neg, fmt::Display};
 
 use auto_ops::{impl_op_ex, impl_op_ex_commutative};
 
@@ -17,6 +17,13 @@ impl Default for Vec3 {
     /// Creates a zero vector
     fn default() -> Self {
         Self::zero()
+    }
+}
+
+impl Display for Vec3 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let Self { x, y, z } = self;
+        write!(f, "({x}, {y}, {z})")
     }
 }
 

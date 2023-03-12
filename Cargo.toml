@@ -1,6 +1,6 @@
 [package]
 name = "gfx-maths"
-version = "0.2.8"
+version = "0.2.9"
 authors = [ "Robin Quint" ]
 edition = "2018"
 description = "Implementations for the most essential Graphics Math operations"

@@ -1,4 +1,4 @@
-use std::ops::Neg;
+use std::{fmt::Display, ops::Neg};
 
 use auto_ops::{impl_op_ex, impl_op_ex_commutative};
 
@@ -16,6 +16,13 @@ impl Default for Vec2 {
     /// Creates a zero vector
     fn default() -> Self {
         Self::zero()
+    }
+}
+
+impl Display for Vec2 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let Self { x, y } = self;
+        write!(f, "({x}, {y})")
     }
 }
 
