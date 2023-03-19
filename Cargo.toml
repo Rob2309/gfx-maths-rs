@@ -2,8 +2,8 @@
 name = "gfx-maths"
 version = "0.2.9"
 authors = [ "Robin Quint" ]
-edition = "2018"
-description = "Implementations for the most essential Graphics Math operations"
+edition = "2021"
+description = "Implementations for the most essential graphics math operations"
 repository = "https://github.com/rob2309/gfx-maths-rs"
 license = "MIT"
 keywords = [
@@ -15,8 +15,6 @@ categories = [
 
 [package.metadata.docs.rs]
 features = [ "swizzle" ]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 auto_ops = "0.3.0"
