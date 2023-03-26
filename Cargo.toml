@@ -14,7 +14,8 @@ categories = [
 ]
 
 [package.metadata.docs.rs]
-features = [ "swizzle" ]
+all-features = true
+rustdoc-args = [ "--cfg", "docs_rs" ]
 
 [dependencies]
 auto_ops = "0.3.0"
@@ -26,4 +27,5 @@ default = []
 
 mat-row-major = []
 
-swizzle = [ "paste" ]
+swizzle = [ "dep:paste" ]
+serde = [ "dep:serde" ]
