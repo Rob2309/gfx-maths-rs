@@ -23,3 +23,6 @@ pub use quaternion::*;
 
 pub mod mat4;
 pub use mat4::*;
+
+pub mod color;
+pub use color::*;
