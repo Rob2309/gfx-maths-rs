@@ -2,7 +2,7 @@ use std::{fmt::Display, ops::Neg};
 
 use auto_ops::{impl_op_ex, impl_op_ex_commutative};
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[repr(C)]
 pub struct Vec4 {
@@ -10,13 +10,6 @@ pub struct Vec4 {
     pub y: f32,
     pub z: f32,
     pub w: f32,
-}
-
-impl Default for Vec4 {
-    /// Creates a zero vector
-    fn default() -> Self {
-        Self::zero()
-    }
 }
 
 impl Display for Vec4 {
@@ -27,28 +20,13 @@ impl Display for Vec4 {
 }
 
 impl Vec4 {
+    /// The zero vector (0, 0, 0)
+    pub const ZERO: Self = Self::new(0.0, 0.0, 0.0, 0.0);
+    /// The one vector (1, 1, 1)
+    pub const ONE: Self = Self::new(1.0, 1.0, 1.0, 1.0);
+
     pub const fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
         Self { x, y, z, w }
-    }
-
-    /// Creates (0, 0, 0, 0)
-    pub const fn zero() -> Self {
-        Self {
-            x: 0.0,
-            y: 0.0,
-            z: 0.0,
-            w: 0.0,
-        }
-    }
-
-    /// Creates (1, 1, 1, 1)
-    pub const fn one() -> Self {
-        Self {
-            x: 1.0,
-            y: 1.0,
-            z: 1.0,
-            w: 1.0,
-        }
     }
 
     /// Returns the square of the vector's length.
@@ -82,7 +60,10 @@ impl Vec4 {
     pub fn dot(&self, b: Vec4) -> f32 {
         self.x * b.x + self.y * b.y + self.z * b.z + self.w * b.w
     }
+}
 
+/// Vec4 swizzles
+impl Vec4 {
     swizzle!(x, x);
     swizzle!(x, y);
     swizzle!(x, z);

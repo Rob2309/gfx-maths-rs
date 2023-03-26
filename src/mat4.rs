@@ -17,7 +17,7 @@ pub struct Mat4 {
 impl Default for Mat4 {
     /// Creates the identity matrix.
     fn default() -> Self {
-        Self::identity()
+        Self::IDENTITY
     }
 }
 
@@ -31,18 +31,16 @@ const fn cr(c: usize, r: usize) -> usize {
 }
 
 impl Mat4 {
-    /// Creates the identity matrix.
-    pub const fn identity() -> Self {
-        Self {
-            values: [
-                1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0,
-            ],
-        }
-    }
+    /// The identity matrix
+    pub const IDENTITY: Self = Self {
+        values: [
+            1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+        ],
+    };
 
     /// Creates a 3D translation matrix.
     pub const fn translate(t: Vec3) -> Self {
-        let mut res = Self::identity();
+        let mut res = Self::IDENTITY;
 
         res.values[cr(3, 0)] = t.x;
         res.values[cr(3, 1)] = t.y;
@@ -53,7 +51,7 @@ impl Mat4 {
 
     /// Creates a 3D rotation matrix.
     pub fn rotate(r: Quaternion) -> Self {
-        let mut res = Self::identity();
+        let mut res = Self::IDENTITY;
 
         let right = r.right();
         let up = r.up();
@@ -76,7 +74,7 @@ impl Mat4 {
 
     /// Creates a 3D scale matrix.
     pub const fn scale(s: Vec3) -> Self {
-        let mut res = Self::identity();
+        let mut res = Self::IDENTITY;
 
         res.values[cr(0, 0)] = s.x;
         res.values[cr(1, 1)] = s.y;
@@ -114,7 +112,7 @@ impl Mat4 {
         near: f32,
         far: f32,
     ) -> Self {
-        let mut res = Self::identity();
+        let mut res = Self::IDENTITY;
 
         let a = 2.0 / (right - left);
         let b = (-left - right) / (right - left);
@@ -145,7 +143,7 @@ impl Mat4 {
         near: f32,
         far: f32,
     ) -> Self {
-        let mut res = Self::identity();
+        let mut res = Self::IDENTITY;
 
         let a = 2.0 / (right - left);
         let b = (-left - right) / (right - left);
@@ -179,7 +177,7 @@ impl Mat4 {
         near: f32,
         far: f32,
     ) -> Self {
-        let mut res = Self::identity();
+        let mut res = Self::IDENTITY;
 
         let a = 2.0 * (right - left);
         let b = (-left - right) / (right - left);
@@ -213,7 +211,7 @@ impl Mat4 {
         near: f32,
         far: f32,
     ) -> Self {
-        let mut res = Self::identity();
+        let mut res = Self::IDENTITY;
 
         let a = 2.0 * (right - left);
         let b = (-left - right) / (right - left);
@@ -237,7 +235,7 @@ impl Mat4 {
     /// Creates a perspective projection matrix
     /// with z mapped to \[0; 1\], as expected by Vulkan.
     pub fn perspective_vulkan(fov_rad: f32, near: f32, far: f32, aspect: f32) -> Self {
-        let mut res = Self::identity();
+        let mut res = Self::IDENTITY;
         let thfov = (fov_rad * 0.5).tan();
 
         res.values[cr(0, 0)] = 1.0 / (thfov * aspect);
@@ -255,7 +253,7 @@ impl Mat4 {
     /// Creates a perspective projection matrix
     /// with z mapped to \[-1; 1\], as expected by OpenGL.
     pub fn perspective_opengl(fov_rad: f32, near: f32, far: f32, aspect: f32) -> Self {
-        let mut res = Self::identity();
+        let mut res = Self::IDENTITY;
         let thfov = (fov_rad * 0.5).tan();
 
         res.values[cr(0, 0)] = 1.0 / (thfov * aspect);
@@ -281,7 +279,7 @@ impl Mat4 {
     /// worldPos /= worldPos.w;
     /// ```
     pub fn inverse_perspective_vulkan(fov_rad: f32, near: f32, far: f32, aspect: f32) -> Self {
-        let mut res = Self::identity();
+        let mut res = Self::IDENTITY;
 
         let thfov = (fov_rad * 0.5).tan();
         let c = far / (far - near);
@@ -310,7 +308,7 @@ impl Mat4 {
     /// worldPos /= worldPos.w;
     /// ```
     pub fn inverse_perspective_opengl(fov_rad: f32, near: f32, far: f32, aspect: f32) -> Self {
-        let mut res = Self::identity();
+        let mut res = Self::IDENTITY;
 
         let thfov = (fov_rad * 0.5).tan();
         let c = (far + near) / (far - near);
@@ -341,7 +339,7 @@ impl Mat4 {
     /// Returns a transposed copy of `self`.
     #[must_use]
     pub fn transposed(&self) -> Mat4 {
-        let mut res = Mat4::identity();
+        let mut res = Mat4::IDENTITY;
 
         for c in 0..4 {
             for r in 0..4 {
@@ -374,7 +372,7 @@ impl Mat4 {
 }
 
 impl_op_ex!(*|a: &Mat4, b: &Mat4| -> Mat4 {
-    let mut res = Mat4::identity();
+    let mut res = Mat4::IDENTITY;
 
     for r in 0..4 {
         for c in 0..4 {

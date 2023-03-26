@@ -17,7 +17,7 @@ pub struct Quaternion {
 impl Default for Quaternion {
     /// Creates an identity rotation
     fn default() -> Self {
-        Self::identity()
+        Self::IDENTITY
     }
 }
 
@@ -29,18 +29,11 @@ impl Display for Quaternion {
 }
 
 impl Quaternion {
+    /// The identity quaternion (represents no rotation)
+    pub const IDENTITY: Self = Self::new(0.0, 0.0, 0.0, 1.0);
+
     pub const fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
         Self { x, y, z, w }
-    }
-
-    /// Creates (0, 0, 0, 1), which represents no rotation
-    pub const fn identity() -> Self {
-        Self {
-            x: 0.0,
-            y: 0.0,
-            z: 0.0,
-            w: 1.0,
-        }
     }
 
     /// Creates a rotation of `radians` radians around `axis`.

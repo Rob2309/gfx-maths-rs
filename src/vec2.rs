@@ -4,19 +4,12 @@ use auto_ops::{impl_op_ex, impl_op_ex_commutative};
 
 use crate::Vec3;
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[repr(C)]
 pub struct Vec2 {
     pub x: f32,
     pub y: f32,
-}
-
-impl Default for Vec2 {
-    /// Creates a zero vector
-    fn default() -> Self {
-        Self::zero()
-    }
 }
 
 impl Display for Vec2 {
@@ -27,18 +20,13 @@ impl Display for Vec2 {
 }
 
 impl Vec2 {
+    /// The zero vector (0, 0)
+    pub const ZERO: Self = Self::new(0.0, 0.0);
+    /// The one vector (1, 1)
+    pub const ONE: Self = Self::new(1.0, 1.0);
+
     pub const fn new(x: f32, y: f32) -> Self {
         Self { x, y }
-    }
-
-    /// Creates (0, 0)
-    pub const fn zero() -> Self {
-        Self { x: 0.0, y: 0.0 }
-    }
-
-    /// Creates (1, 1)
-    pub const fn one() -> Self {
-        Self { x: 1.0, y: 1.0 }
     }
 
     /// Returns the square of the vector's length.
@@ -78,7 +66,10 @@ impl Vec2 {
             z,
         }
     }
+}
 
+/// Vec2 swizzles
+impl Vec2 {
     swizzle!(x, x);
     swizzle!(x, y);
     swizzle!(y, x);
