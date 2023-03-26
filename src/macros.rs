@@ -15,7 +15,7 @@ macro_rules! swizzle_type {
 macro_rules! swizzle {
     ($($members:ident),+) => {
         paste::paste! {
-            #[cfg_attr(doc, doc(cfg(feature="swizzle")))] // make docs.rs more readable by showing the required feature
+            #[cfg(feature = "swizzle")]
             pub fn [<$($members)+>](&self) -> swizzle_type!($($members),+) {
                 <swizzle_type!($($members),+)>::new(
                     $(self.$members),+

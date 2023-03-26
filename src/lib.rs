@@ -1,31 +1,10 @@
-//! This crate implements all the basic mathematical structures and operations
-//! that are needed for almost any graphical program, namely:
-//! - [`Vec2`]
-//! - [`Vec3`]
-//! - [`Vec4`]
-//! - [`Quaternion`]
-//! - [`Mat4`]
-//!
-//! The usual operations are implemented via member functions and operator overloads.
-//! Operators should handle almost exactly as they would in GLSL, e.g.
-//! ```
-//! use gfx_maths::*;
-//!
-//! let v = Vec3::new(5.0, 6.0, 7.0);
-//! let s = 1.0 / v;
-//!
-//! let t = Mat4::translate(Vec3::new(1.0, 0.0, 0.0)) * s;
-//! ```
-//!
-//! # Notation
-//! Vectors are always treated as column vectors, which is why
-//! only [`Mat4`] * [`Vec4`] is implemented and not [`Vec4`] * [`Mat4`].
+#![doc = include_str!("../README.md")]
 
 #![allow(unknown_lints)]
 #![warn(clippy::all)]
+
 // Used to make docs.rs more readable
-#![cfg_attr(doc, feature(doc_auto_cfg))]
-#![cfg_attr(doc, feature(doc_cfg))]
+#![cfg_attr(docs_rs, feature(doc_auto_cfg))]
 
 #[macro_use]
 mod macros;
