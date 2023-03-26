@@ -457,6 +457,12 @@ impl From<[f32; 3]> for Color {
     }
 }
 
+impl From<Color> for [f32; 3] {
+    fn from(value: Color) -> Self {
+        [value.r, value.g, value.b]
+    }
+}
+
 impl From<[f32; 4]> for Color {
     fn from(d: [f32; 4]) -> Self {
         Self {
@@ -465,6 +471,12 @@ impl From<[f32; 4]> for Color {
             b: d[2],
             a: d[3],
         }
+    }
+}
+
+impl From<Color> for [f32; 4] {
+    fn from(value: Color) -> Self {
+        [value.r, value.g, value.b, value.a]
     }
 }
 
