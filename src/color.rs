@@ -32,37 +32,37 @@ impl Display for Color {
 
 impl Color {
     // The basic CSS colors, for quick prototyping (https://www.w3.org/wiki/CSS/Properties/color/keywords)
-    /// <div style="background-color:new(0%, 0%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(0%, 0%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const BLACK: Self = Self::new(0.0, 0.0, 0.0, 1.0);
-    /// <div style="background-color:new(75%, 75%, 75%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(75%, 75%, 75%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const SILVER: Self = Self::new(0.75, 0.75, 0.75, 1.0);
-    /// <div style="background-color:new(50%, 50%, 50%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(50%, 50%, 50%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const GRAY: Self = Self::new(0.5, 0.5, 0.5, 1.0);
-    /// <div style="background-color:new(100%, 100%, 100%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(100%, 100%, 100%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const WHITE: Self = Self::new(1.0, 1.0, 1.0, 1.0);
-    /// <div style="background-color:new(50%, 0%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(50%, 0%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const MAROON: Self = Self::new(0.5, 0.0, 0.0, 1.0);
-    /// <div style="background-color:new(100%, 0%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(100%, 0%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const RED: Self = Self::new(1.0, 0.0, 0.0, 1.0);
-    /// <div style="background-color:new(50%, 0%, 50%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(50%, 0%, 50%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const PURPLE: Self = Self::new(0.5, 0.0, 0.5, 1.0);
-    /// <div style="background-color:new(100%, 0%, 100%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(100%, 0%, 100%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const FUCHSIA: Self = Self::new(1.0, 0.0, 1.0, 1.0);
-    /// <div style="background-color:new(0%, 50%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(0%, 50%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const GREEN: Self = Self::new(0.0, 0.5, 0.0, 1.0);
-    /// <div style="background-color:new(0%, 100%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(0%, 100%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const LIME: Self = Self::new(0.0, 1.0, 0.0, 1.0);
-    /// <div style="background-color:new(50%, 50%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(50%, 50%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const OLIVE: Self = Self::new(0.5, 0.5, 0.0, 1.0);
-    /// <div style="background-color:new(100%, 100%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(100%, 100%, 0%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const YELLOW: Self = Self::new(1.0, 1.0, 0.0, 1.0);
-    /// <div style="background-color:new(0%, 0%, 50%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(0%, 0%, 50%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const NAVI: Self = Self::new(0.0, 0.0, 0.5, 1.0);
-    /// <div style="background-color:new(0%, 0%, 100%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(0%, 0%, 100%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const BLUE: Self = Self::new(0.0, 0.0, 1.0, 1.0);
-    /// <div style="background-color:new(0%, 50%, 50%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(0%, 50%, 50%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const TEAL: Self = Self::new(0.0, 0.5, 0.5, 1.0);
-    /// <div style="background-color:new(0%, 100%, 100%); width: 10px; padding: 10px; border: 1px solid;"></div>
+    /// <div style="background-color:rgb(0%, 100%, 100%); width: 10px; padding: 10px; border: 1px solid;"></div>
     pub const AQUA: Self = Self::new(0.0, 1.0, 1.0, 1.0);
 
     /// Creates a Color from new components
@@ -70,12 +70,44 @@ impl Color {
         Self { r, g, b, a }
     }
 
-    /// Creates a Color from a hex value
-    pub fn from_hex(hex: u32) -> Self {
+    /// Creates a Color from a hex value.
+    /// The format of `hex` is `0xRRGGBB`, the MSB is discarded.
+    /// The `a` component is always set to 1.0.
+    pub fn from_hex_rgb(hex: u32) -> Self {
         let r = ((hex >> 16) & 0xFF) as f32 / 255.0;
         let g = ((hex >> 8) & 0xFF) as f32 / 255.0;
         let b = (hex & 0xFF) as f32 / 255.0;
         Self::new(r, g, b, 1.0)
+    }
+
+    /// Creates a Color from a hex value.
+    /// The format of `hex` is `0xBBGGRR`, the MSB is discarded.
+    /// The `a` component is always set to 1.0.
+    pub fn from_hex_bgr(hex: u32) -> Self {
+        let b = ((hex >> 16) & 0xFF) as f32 / 255.0;
+        let g = ((hex >> 8) & 0xFF) as f32 / 255.0;
+        let r = (hex & 0xFF) as f32 / 255.0;
+        Self::new(r, g, b, 1.0)
+    }
+
+    /// Creates a Color from a hex value.
+    /// The format of `hex` is `0xRRGGBBAA`.
+    pub fn from_hex_rgba(hex: u32) -> Self {
+        let r = ((hex >> 24) & 0xFF) as f32 / 255.0;
+        let g = ((hex >> 16) & 0xFF) as f32 / 255.0;
+        let b = ((hex >> 8) & 0xFF) as f32 / 255.0;
+        let a = (hex & 0xFF) as f32 / 255.0;
+        Self::new(r, g, b, a)
+    }
+
+    /// Creates a Color from a hex value.
+    /// The format of `hex` is `0xAARRGGBB`.
+    pub fn from_hex_argb(hex: u32) -> Self {
+        let a = ((hex >> 24) & 0xFF) as f32 / 255.0;
+        let r = ((hex >> 16) & 0xFF) as f32 / 255.0;
+        let g = ((hex >> 8) & 0xFF) as f32 / 255.0;
+        let b = (hex & 0xFF) as f32 / 255.0;
+        Self::new(r, g, b, a)
     }
 
     swizzle!(r, r, r);
@@ -441,9 +473,9 @@ mod tests {
     use super::*;
 
     #[test]
-    fn from_hex() {
+    fn from_hex_rgb() {
         assert_eq!(
-            Color::from_hex(0xFF0000),
+            Color::from_hex_rgb(0xFF0000),
             Color {
                 r: 1.0,
                 g: 0.0,
@@ -453,7 +485,7 @@ mod tests {
         );
 
         assert_eq!(
-            Color::from_hex(0x00FF00),
+            Color::from_hex_rgb(0x00FF00),
             Color {
                 r: 0.0,
                 g: 1.0,
@@ -463,7 +495,7 @@ mod tests {
         );
 
         assert_eq!(
-            Color::from_hex(0x0000FF),
+            Color::from_hex_rgb(0x0000FF),
             Color {
                 r: 0.0,
                 g: 0.0,
@@ -473,7 +505,156 @@ mod tests {
         );
 
         assert_eq!(
-            Color::from_hex(0xFFFFFF),
+            Color::from_hex_rgb(0xFFFFFF),
+            Color {
+                r: 1.0,
+                g: 1.0,
+                b: 1.0,
+                a: 1.0,
+            }
+        );
+    }
+
+    #[test]
+    fn from_hex_bgr() {
+        assert_eq!(
+            Color::from_hex_bgr(0x0000FF),
+            Color {
+                r: 1.0,
+                g: 0.0,
+                b: 0.0,
+                a: 1.0,
+            }
+        );
+
+        assert_eq!(
+            Color::from_hex_bgr(0x00FF00),
+            Color {
+                r: 0.0,
+                g: 1.0,
+                b: 0.0,
+                a: 1.0,
+            }
+        );
+
+        assert_eq!(
+            Color::from_hex_bgr(0xFF0000),
+            Color {
+                r: 0.0,
+                g: 0.0,
+                b: 1.0,
+                a: 1.0,
+            }
+        );
+
+        assert_eq!(
+            Color::from_hex_bgr(0xFFFFFF),
+            Color {
+                r: 1.0,
+                g: 1.0,
+                b: 1.0,
+                a: 1.0,
+            }
+        );
+    }
+
+    #[test]
+    fn from_hex_rgba() {
+        assert_eq!(
+            Color::from_hex_rgba(0xFF000000),
+            Color {
+                r: 1.0,
+                g: 0.0,
+                b: 0.0,
+                a: 0.0,
+            }
+        );
+
+        assert_eq!(
+            Color::from_hex_rgba(0x00FF0000),
+            Color {
+                r: 0.0,
+                g: 1.0,
+                b: 0.0,
+                a: 0.0,
+            }
+        );
+
+        assert_eq!(
+            Color::from_hex_rgba(0x0000FF00),
+            Color {
+                r: 0.0,
+                g: 0.0,
+                b: 1.0,
+                a: 0.0,
+            }
+        );
+
+        assert_eq!(
+            Color::from_hex_rgba(0x000000FF),
+            Color {
+                r: 0.0,
+                g: 0.0,
+                b: 0.0,
+                a: 1.0,
+            }
+        );
+
+        assert_eq!(
+            Color::from_hex_rgba(0xFFFFFFFF),
+            Color {
+                r: 1.0,
+                g: 1.0,
+                b: 1.0,
+                a: 1.0,
+            }
+        );
+    }
+
+    #[test]
+    fn from_hex_argb() {
+        assert_eq!(
+            Color::from_hex_argb(0x00FF0000),
+            Color {
+                r: 1.0,
+                g: 0.0,
+                b: 0.0,
+                a: 0.0,
+            }
+        );
+
+        assert_eq!(
+            Color::from_hex_argb(0x0000FF00),
+            Color {
+                r: 0.0,
+                g: 1.0,
+                b: 0.0,
+                a: 0.0,
+            }
+        );
+
+        assert_eq!(
+            Color::from_hex_argb(0x000000FF),
+            Color {
+                r: 0.0,
+                g: 0.0,
+                b: 1.0,
+                a: 0.0,
+            }
+        );
+
+        assert_eq!(
+            Color::from_hex_argb(0xFF000000),
+            Color {
+                r: 0.0,
+                g: 0.0,
+                b: 0.0,
+                a: 1.0,
+            }
+        );
+
+        assert_eq!(
+            Color::from_hex_argb(0xFFFFFFFF),
             Color {
                 r: 1.0,
                 g: 1.0,
